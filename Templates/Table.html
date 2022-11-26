@@ -1,0 +1,168 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        td {
+          border: none;
+        }
+        .btn-primary {
+          border: none; 
+          color: blue; 
+          border: blue 2px solid;
+          padding: 4px 12px;
+          border-radius: 10px;
+        }
+        button a {
+          text-decoration: none;
+          cursor: pointer;
+        }
+        #b {
+          width: 6%;
+          text-align: center;
+        }
+        #a {
+          width: 47%;
+        }
+        tr {
+          display: flex;
+        }
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        #carrier2 {
+            display: flex;
+            margin: 0.5%;
+            height: fit-content;
+        }
+        .col-md-9 {
+            width: 70%;
+        }
+        .col-md-3 {
+            width: 30%;
+            height: max-content;
+            padding-bottom: 5px;
+        }
+        .col-sm-12 {
+          width: 100%;
+        }
+        #searchbar{
+            background-color: transparent;
+            border-radius: 12px;
+            border: 2px solid #98A2B2;
+            padding-top: 1%;
+            height: 100%;
+            margin-top: 2%;
+            color: black;
+            float: right;
+            font-size: 18px;
+            font-family: inter;
+            padding: 10px;
+        }
+        #searchbar::placeholder{
+            font-size: 14px;
+            font-family: inter;
+            text-transform: initial;
+            padding-left: 3%;
+            color: #b5bac2;
+        }
+        #searchbar::-webkit-input-placeholder { 
+            font-family: FontAwesome;
+            }
+            
+        #searchbar::-moz-placeholder  { 
+            font-family: FontAwesome;
+        }
+            
+        #searchbar:-ms-input-placeholder  { 
+            font-family: FontAwesome;
+        }
+        @media screen and (max-width: 550px) {
+          #carrier2 {
+            width: 100%;
+          }
+          #searchbar {
+            float: unset;
+            justify-content: center;
+            width: -webkit-fill-available;
+          }
+          #carrier2 {
+            display: grid;
+          }
+          tr {
+            display: block;
+          }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="carrier2">
+            <span class="col-md-9 col-sm-12"></span>
+            <span class="col-md-3 col-sm-12">
+                <input id='searchbar' 
+                    type="search"
+                    placeholder="&#61442; Search" 
+                    onkeyup="search()"
+                />
+            </span>
+        </div>
+        <table id="myTable">
+            <tr class="header">
+              <th id="a">Cryptocurrencies</th>
+              <th id="a">Prices</th>
+              <th id="b">Actions</th>
+            </tr>
+            {% for cryptocurrencies in Crypto %}
+              <tr>
+                <td id="a">{{ cryptocurrencies.cryptocurrency }}</td>
+                <td id="a">{{ cryptocurrencies.price }}</td>  
+                <td id="b">
+                  <button class="btn-primary">
+                    <a href="{% url 'update' cryptocurrencies.id %}">Edit</a>
+                  </button>
+                </td>  
+              </tr>
+            {% endfor %}
+          </table>
+    </div>
+
+    <script>
+        function search() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchbar");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
+        }
+    </script>
+</body>
+</html>
+
+{% endblock %}

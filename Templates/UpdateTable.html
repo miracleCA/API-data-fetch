@@ -1,0 +1,79 @@
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Update</title>
+
+            <style>
+                form {
+                    display: flex;
+                    text-align: center;
+                }
+                #a, #b {
+                    width: 47%;
+                    padding-right: 20px;
+                }
+                button {
+                    width: 6%;
+                    border: 2px solid blue;
+                    color: blue;
+                    border-radius: 5px;
+                }
+                button a {
+                    text-decoration: none;
+                }
+                #text {
+                    width: 95%;
+                    height: 30px;
+                    color: black;
+                    font-size: 20px;
+                }
+                @media screen and (max-width: 550px) {
+                    form {
+                        display: flow-root;
+                    }
+                    #a, #b {
+                        width: max-content;
+                        padding-right: 0px;
+                    }
+                    #text {
+                        margin-bottom: 7px;
+                    }
+                    button {
+                        width: 97%;
+                        padding-right: 0px;
+                        height: 35px;
+                    }
+                    
+                }
+                @media screen and (min-width: 600px) and (max-width: 900px) {
+                    #a, #b {
+                        padding-right: 3px;
+                        width: 47%;
+                    }
+                    button {
+                        width: fit-content;
+                    }
+                    
+                }
+            </style>
+        </head>
+    <body>
+        <div>
+            <form method="POST">
+                {% csrf_token %}
+                <span id="a">
+                    <input id="text" value="{{ Crypto.cryptocurrency }}" type="text" name="cryptocurrency" placeholder="Cryptocurrency">
+                </span>
+                <span  id="b">
+                    <input id="text" value="{{ Crypto.price }}" type="text" name="price" placeholder="Price">
+                </span>
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </body>
+    </html>
+{% endblock %}
